@@ -122613,6 +122613,9 @@ interface <dfn interface>SharedWorkerGlobalScope</dfn> : <span>WorkerGlobalScope
    <li><p><span data-x="set append">Append</span> <var>owner</var> to <var>worker global
    scope</var>'s <span>owner set</span>.</p></li>
 
+   <li><p>Set <var>worker global scope</var>'s <span
+   data-x="concept-WorkerGlobalScope-url">url</span> to <var>url</var>.
+
    <li>
     <p>If <var>is shared</var> is true, then:</p>
 
@@ -122676,10 +122679,6 @@ interface <dfn interface>SharedWorkerGlobalScope</dfn> : <span>WorkerGlobalScope
       or a <span>byte sequence</span> <var>bodyBytes</var>:</p>
 
       <ol>
-       <li><p>Set <var>worker global scope</var>'s <span
-       data-x="concept-WorkerGlobalScope-url">url</span> to <var>response</var>'s <span
-       data-x="concept-response-url">url</span>.</p></li>
-
        <li><p><span data-x="initialize worker policy container">Initialize worker global scope's
        policy container</span> given <var>worker global scope</var>, <var>response</var>, and
        <var>inside settings</var>.</p></li>
