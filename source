@@ -133158,8 +133158,11 @@ interface <dfn interface>Storage</dfn> {
    equal to the number of key/value pairs.</p></dd>
 
    <dt><code data-x=""><var>value</var> = <var>storage</var>.<span subdfn data-x="dom-Storage-getItem">getItem</span> (<var>key</var>)</code></dt>
-   <dt><code data-x=""><var>value</var> = <var>storage</var>[<var>key</var>]</code></dt>
    <dd><p>Returns the current value associated with the given <var>key</var>, or null if the given
+   <var>key</var> does not exist.</p></dd>
+
+   <dt><code data-x=""><var>value</var> = <var>storage</var>[<var>key</var>]</code></dt>
+   <dd><p>Returns the current value associated with the given <var>key</var>, or undefined if the given
    <var>key</var> does not exist.</p></dd>
 
    <dt><code data-x=""><var>storage</var>.<span subdfn data-x="dom-Storage-setItem">setItem</span> (<var>key</var>, <var>value</var>)</code></dt>
@@ -133206,6 +133209,102 @@ interface <dfn interface>Storage</dfn> {
    <dt><dfn data-x="concept-Storage-type">type</dfn>
    <dd>"<code data-x="">local</code>" or "<code data-x="">session</code>".
   </dl>
+
+  <div algorithm>
+  <p>The <span>supported property names</span> on a <code>Storage</code> object <var>storage</var>
+  are the result of running <span data-x="map get the keys">get the keys</span> on
+  <var>storage</var>'s <span data-x="concept-Storage-map">map</span>.</p>
+  </div>
+
+  <div algorithm>
+  <p id="dom-storage-nameditem">To <span>determine the value of a named property</span>
+  <var>name</var> for a <code>Storage</code> object <var>storage</var>, run the following steps:</p>
+
+  <ol>
+   <li><p><span>Assert</span>: <var>storage</var>'s
+   <span data-x="concept-Storage-map">map</span>[<var>name</var>]
+   <span data-x="map exists">exists</span>.</p></li>
+
+   <li><p>Return <var>storages</var>'s <span
+   data-x="concept-Storage-map">map</span>[<var>name</var>].</p></li>
+  </ol>
+  </div>
+
+  <div algorithm>
+  <p id="dom-storage-item">To <span>determine the value of an indexed property</span>
+  <var>index</var> for a <code>Storage</code> object <var> storage</var>, run the following
+  steps:</p>
+
+  <ol>
+   <li><p>Let <var>key</var> be <var>index</var>, <span
+   data-x="serialize an integer">serialized</span>.</p></li>
+
+   <li><p><span>Assert</span>: <var>storage</var>'s
+   <span data-x="concept-Storage-map">map</span>[<var>key</var>]
+   <span data-x="map exists">exists</span>.</p></li>
+
+   <li><p>Return <var>storage</var>'s <span
+   data-x="concept-Storage-map">map</span>[<var>key</var>].</p></li>
+  </ol>
+  </div>
+
+  <div algorithm>
+  <p id="dom-storage-delete">To <span>delete an existing named property</span>
+  <var>name</var> for a <code>Storage</code> object <var>storage</var>, run the following steps:</p>
+  <ol>
+
+   <li><p><span data-x="concept-Storage-remove-item">Remove an item</span> from <var>storage</var>
+   with <var>name</var>.</p></li>
+
+  </ol>
+  </div>
+
+  <div algorithm>
+  <p>To <dfn data-x="concept-Storage-set-item">set an item</dfn> for a <code>Storage</code>
+  object <var>storage</var> given <var>key</var> and <var>value</var>, run these steps:</p>
+
+  <ol>
+   <li><p>Let <var>oldValue</var> be null.</p></li>
+
+   <li><p>Let <var>reorder</var> be true.</p></li>
+
+   <li>
+    <p>If <var>storage</var>'s <span data-x="concept-Storage-map">map</span>[<var>key</var>]
+    <span data-x="map exists">exists</span>:</p>
+
+    <ol>
+     <li><p>Set <var>oldValue</var> to <var>storage</var>'s <span
+     data-x="concept-Storage-map">map</span>[<var>key</var>].</p></li>
+
+     <li><p>If <var>oldValue</var> <span>is</span> <var>value</var>, then return.</p></li>
+
+     <li><p>Set <var>reorder</var> to false.</p></li>
+    </ol>
+   </li>
+
+  </ol>
+  </div>
+
+  <div algorithm>
+  <p>To <dfn data-x="concept-Storage-remove-item">remove an item</dfn> from a <code>Storage</code>
+  object <var>storage</var> given <var>key</var>, run these steps:</p>
+
+  <ol>
+   <li><p>If <var>storage</var>'s <span data-x="concept-Storage-map">map</span>[<var>key</var>] does
+   not <span data-x="map exists">exist</span>, then return.</p></li>
+
+   <li><p>Let <var>oldValue</var> be <var>storage</var>'s <span
+   data-x="concept-Storage-map">map</span>[<var>key</var>].</p></li>
+
+   <li><p><span data-x="map remove">Remove</span> <var>storage</var>'s <span
+   data-x="concept-Storage-map">map</span>[<var>key</var>].</p></li>
+
+   <li><p><span data-x="concept-Storage-reorder">Reorder</span> <var>storage</var>.</p></li>
+
+   <li><p><span data-x="concept-Storage-broadcast">Broadcast</span> <var>storage</var> with
+   <var>key</var>, <var>oldValue</var>, and null.</p></li>
+  </ol>
+  </div>
 
   <div algorithm>
   <p>To <dfn data-x="concept-Storage-reorder">reorder</dfn> a <code>Storage</code> object
@@ -133295,12 +133394,6 @@ interface <dfn interface>Storage</dfn> {
   </div>
 
   <div algorithm>
-  <p>The <span>supported property names</span> on a <code>Storage</code> object <var>storage</var>
-  are the result of running <span data-x="map get the keys">get the keys</span> on
-  <var>storage</var>'s <span data-x="concept-Storage-map">map</span>.</p>
-  </div>
-
-  <div algorithm>
   <p>The <dfn method for="Storage"><code
   data-x="dom-Storage-getItem">getItem(<var>key</var>)</code></dfn> method steps are:</p>
 
@@ -133318,35 +133411,10 @@ interface <dfn interface>Storage</dfn> {
   <var>value</var>)</code></dfn> method steps are:</p>
 
   <ol>
-   <li><p>Let <var>oldValue</var> be null.</p></li>
 
-   <li><p>Let <var>reorder</var> be true.</p></li>
+   <li><p><span data-x="concept-Storage-set-item">Set an item</span> for <span>this</span>
+   with <var>key</var> and <var>value</var>.</p></li>
 
-   <li>
-    <p>If <span>this</span>'s <span data-x="concept-Storage-map">map</span>[<var>key</var>]
-    <span data-x="map exists">exists</span>:</p>
-
-    <ol>
-     <li><p>Set <var>oldValue</var> to <span>this</span>'s <span
-     data-x="concept-Storage-map">map</span>[<var>key</var>].</p></li>
-
-     <li><p>If <var>oldValue</var> <span>is</span> <var>value</var>, then return.</p></li>
-
-     <li><p>Set <var>reorder</var> to false.</p></li>
-    </ol>
-   </li>
-
-   <li><p>If <var>value</var> cannot be stored, then throw a
-   <code>QuotaExceededError</code>.</p></li>
-
-   <li><p><span data-x="map set">Set</span> <span>this</span>'s <span
-   data-x="concept-Storage-map">map</span>[<var>key</var>] to <var>value</var>.</p></li>
-
-   <li><p>If <var>reorder</var> is true, then <span data-x="concept-Storage-reorder">reorder</span>
-   <span>this</span>.</p></li>
-
-   <li><p><span data-x="concept-Storage-broadcast">Broadcast</span> <span>this</span> with
-   <var>key</var>, <var>oldValue</var>, and <var>value</var>.</p></li>
   </ol>
   </div>
 
@@ -133355,19 +133423,10 @@ interface <dfn interface>Storage</dfn> {
   data-x="dom-Storage-removeItem">removeItem(<var>key</var>)</code></dfn> method steps are:</p>
 
   <ol>
-   <li><p>If <span>this</span>'s <span data-x="concept-Storage-map">map</span>[<var>key</var>] does
-   not <span data-x="map exists">exist</span>, then return.</p></li>
 
-   <li><p>Set <var>oldValue</var> to <span>this</span>'s <span
-   data-x="concept-Storage-map">map</span>[<var>key</var>].</p></li>
+   <li><p><span data-x="concept-Storage-remove-item">Remove an item</span> from <span>this</span>
+   with <var>key</var>.</p></li>
 
-   <li><p><span data-x="map remove">Remove</span> <span>this</span>'s <span
-   data-x="concept-Storage-map">map</span>[<var>key</var>].</p></li>
-
-   <li><p><span data-x="concept-Storage-reorder">Reorder</span> <span>this</span>.</p></li>
-
-   <li><p><span data-x="concept-Storage-broadcast">Broadcast</span> <span>this</span> with
-   <var>key</var>, <var>oldValue</var>, and null.</p></li>
   </ol>
   </div>
 
