@@ -35078,12 +35078,12 @@ interface <dfn interface>HTMLIFrameElement</dfn> : <span>HTMLElement</span> {
   <var>insertedNode</var>, are:</p>
 
   <ol>
-   <li><p><span>Create a new child navigable</span> for <var>insertedNode</var>.</p></li>
-
    <li><p>If <var>insertedNode</var> has a <code data-x="attr-iframe-sandbox">sandbox</code>
    attribute, then <span data-x="parse a sandboxing directive">parse the sandboxing
    directive</span> given the attribute's value and <var>insertedNode</var>'s
    <span><code>iframe</code> sandboxing flag set</span>.</p></li>
+
+   <li><p><span>Create a new child navigable</span> for <var>insertedNode</var>.</p></li>
 
    <li><p><span>Process the <code>iframe</code> attributes</span> for <var>insertedNode</var>, with
    <i data-x="process-iframe-initial-insertion">initialInsertion</i> set to true.</p></li>
