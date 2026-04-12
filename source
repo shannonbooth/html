@@ -125022,14 +125022,15 @@ enum <dfn enum>DOMParserSupportedType</dfn> {
   are:</p>
 
   <ol>
-   <li><p>Let <var>algorithm</var> be the <span>HTML fragment parsing algorithm</span>.</p></li>
+   <li><p>Let <var>newChildren</var> be null.</p></li>
 
    <li><p>If <var>context</var>'s <span>node document</span> is an <span data-x="XML documents">XML
-   document</span>, then set <var>algorithm</var> to the <span>XML fragment parsing
-   algorithm</span>.</p></li>
+   document</span>, then set <var>newChildren</var> to the result of invoking the <span>XML fragment
+   parsing algorithm</span> given <var>context</var> and <var>markup</var>.</p></li>
 
-   <li><p>Let <var>newChildren</var> be the result of invoking <var>algorithm</var> given
-   <var>context</var>, <var>markup</var>, false, and <var>scriptingMode</var>.</p></li>
+   <li><p>Otherwise set <var>newChildren</var> to the result of invoking the <span>HTML fragment
+   parsing algorithm</span> given <var>context</var>, <var>markup</var>, false, and
+   <var>scriptingMode</var>.</p></li>
 
    <li><p>Let <var>fragment</var> be a new <code>DocumentFragment</code> whose <span>node
    document</span> is <var>context</var>'s <span>node document</span>.</p></li>
