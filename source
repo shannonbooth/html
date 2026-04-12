@@ -125017,11 +125017,14 @@ enum <dfn enum>DOMParserSupportedType</dfn> {
 
   <div algorithm>
   <p>The <dfn export>fragment parsing algorithm steps</dfn>, given an <code>Element</code>
-  <var>context</var>, a string <var>markup</var>, and an optional <span>fragment parser scripting
-  mode</span> <var>scriptingMode</var> (default <span data-x="scripting-mode-inert">Inert</span>),
-  are:</p>
+  <var>context</var>, a string <var>markup</var>, and an optional <span>parser scripting mode</span>
+  <var>scriptingMode</var> (default <span data-x="scripting-mode-inert">Inert</span>), are:</p>
 
   <ol>
+   <li><p><span>Assert</span>: <var>scriptingMode</var> is either <span
+   data-x="scripting-mode-inert">Inert</span> or <span
+   data-x="scripting-mode-fragment">Fragment</span>.
+
    <li><p>Let <var>newChildren</var> be null.</p></li>
 
    <li><p>If <var>context</var>'s <span>node document</span> is an <span data-x="XML documents">XML
@@ -137781,10 +137784,6 @@ dictionary <dfn dictionary>StorageEventInit</dfn> : <span>EventInit</span> {
    data-x="dom-Range-createContextualFragment">createContextualFragment()</code>.</dd>
   </dl>
 
-  <p>A <dfn>fragment parser scripting mode</dfn> is either <span
-  data-x="scripting-mode-inert">Inert</span> or <span
-  data-x="scripting-mode-fragment">Fragment</span>.</p>
-
   <p>The <dfn>frameset-ok flag</dfn> is set to "ok" when the parser is created. It is set to "not
   ok" after certain tokens are seen.</p>
 
@@ -145691,7 +145690,7 @@ console.assert(container.firstChild instanceof SuperP);
   <p>The <dfn>HTML fragment parsing algorithm</dfn>, given an <code>Element</code> node <dfn
   data-x="concept-frag-parse-context"><var>context</var></dfn>, string <var>input</var>, an
   optional boolean <var>allowDeclarativeShadowRoots</var> (default false), and an optional
-  <span>fragment parser scripting mode</span> <var>scriptingMode</var> (default <span
+  <span>parser scripting mode</span> <var>scriptingMode</var> (default <span
   data-x="scripting-mode-inert">Inert</span>) is the following steps. They return a list of zero or
   more nodes.</p>
 
@@ -145703,6 +145702,10 @@ console.assert(container.firstChild instanceof SuperP);
   handling this algorithm, then that is an error in the specification.</p>
 
   <ol>
+   <li><p><span>Assert</span>: <var>scriptingMode</var> is either <span
+   data-x="scripting-mode-inert">Inert</span> or <span
+   data-x="scripting-mode-fragment">Fragment</span>.
+
    <li><p>Let <var>document</var> be a <code>Document</code> node whose <span
    data-x="concept-document-type">type</span> is "<code data-x="">html</code>".</p></li>
 
